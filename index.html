@@ -6,21 +6,117 @@
     <title>Document</title>
 </head>
 <body>
+
+    <div style="background-color: lightgray; padding: 20px; border-radius: 10px; width: 600px; margin: auto;">
+    <h2>Cadastro de Participantes</h2>
+
     <form onsubmit=event.preventDefault();
         nometabela.textContent = nome.value;
         emailtabela.textContent = email.value;>
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+        <div style="display: flex; gap: 50px; flex-direction: row;"> 
+            <div style="display: flex; flex-direction: column; width: 200px;">
+                <label for="nome">Nome:</label>
+                <input style="border-radius: 5px;" type="text" id="nome" name="nome" required; placeholder="Nome do Aluno"><br><br>
+            </div>
 
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required><br><br>
+            <div style="display: flex; flex-direction: column; width: 200px;">
+                <label for="email">Email:</label>
+                <input style="border-radius: 5px;" type="email" id="email" name="email" required; placeholder="aluno@email.com"><br><br>
+            </div>
+        </div>
 
-        <input type="submit" value="Enviar">
+        <div style="display: flex; gap: 25px; flex-direction: row;">
+            <div style="display: flex; flex-direction: column; width: 200px;">
+                <label for="área-de-interesse">Área de interesse:</label><br>
+                <input style="border-radius: 5px;"   type="text" id="área-de-interesse" name="área-de-interesse" required; placeholder="Front-end">
+            </div><br> 
+            <div>   
+                <label for="turno">Turno:</label><br>
+                <input type="checkbox" id="turno" name="turno" value="Manhã"> Manhã
+                <input type="checkbox" id="turno" name="turno" value="Tarde"> Tarde
+                <input type="checkbox" id="turno" name="turno" value="Noite"> Noite
+            </div>
+        </div><br>
+        
+        <div style="display: flex; gap: 48px; flex-direction: row;">
+        <div>
+            <label for="presença">Presença:</label><br>
+            <input type="checkbox" id="presença" name="presença" value="Presente"> Presente
+            <input type="checkbox" id="presença" name="presença" value="Ausente"> Ausente
+        </div><br>
+        <div>
+            <label for="situação">Situação:</label><br>
+            <input type="checkbox" id="situação" name="situação" value="Aprovado"> Aprovado
+            <input type="checkbox" id="situação" name="situação" value="Reprovado"> Reprovado
+            <input type="checkbox" id="situação" name="situação" value="Em análise"> Em análise
+        </div>
+        </div> <br>
 
-        <button>Enviar</button>
+
+        <button style="background-color: rgb(86, 86, 211); color: white; border-radius: 10px; padding: 10px 20px; cursor: pointer;">Adicionar à tabela</button><br><br>
+        
+    </form>
+
+    </div><br>
+
+    <div style="background-color: lightgray; padding: 20px; border-radius: 10px; width: 600px; margin: auto;">
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+        <thead>
+            <tr style="background-color: rgb(86, 86, 211); color: white;">
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Área de interesse</th>
+                <th>Turno</th>
+                <th>Presença</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="nometabela"></td>
+                <td id="emailtabela"></td>
+                <td id="área-de-interesse-tabela"></td>
+                <td id="turno-tabela"></td>
+                <td id="presença-tabela"></td>
+                <td id="situação-tabela"></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const nomeTabela = document.getElementById('nometabela');
+        const emailTabela = document.getElementById('emailtabela');
+        const areaTabela = document.getElementById('área-de-interesse-tabela');
+        const turnoTabela = document.getElementById('turno-tabela');
+        const presencaTabela = document.getElementById('presença-tabela');
+        const situacaoTabela = document.getElementById('situação-tabela');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        nomeTabela.textContent = document.getElementById('nome').value;
+        emailTabela.textContent = document.getElementById('email').value;
+        areaTabela.textContent = document.getElementById('área-de-interesse').value;
+
+        const turnosMarcados = Array.from(document.querySelectorAll('input[name="turno"]:checked'))
+                                    .map(cb => cb.value);
+        turnoTabela.textContent = turnosMarcados.join(', ') || 'Nenhum';
+
+        const presencaMarcada = Array.from(document.querySelectorAll('input[name="presença"]:checked'))
+                                     .map(cb => cb.value);
+        presencaTabela.textContent = presencaMarcada.join(', ') || 'Nenhum';
+
+        const situacaoMarcada = Array.from(document.querySelectorAll('input[name="situação"]:checked'))
+                                     .map(cb => cb.value);
+        situacaoTabela.textContent = situacaoMarcada.join(', ') || 'Nenhum';
+
+        form.reset();
+    });
+</script>
+
 
 </body>
 </html>
